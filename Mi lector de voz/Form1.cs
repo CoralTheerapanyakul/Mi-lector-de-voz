@@ -28,12 +28,57 @@ namespace Mi_lector_de_voz
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            if (reader != null)
+            {
+                if (reader.State == SynthesizerState.Paused)
+                {
+                    reader.Resume();
+                }
+            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
+            Stream str;
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if ((str = openFileDialog.OpenFile()) != null)
+                {
+                    string fname = openFileDialog.FileName;
+                    string filetxt = File.ReadAllText(fname);
+                    lbtexto.Text = filetxt;
+                }
+            }
+        }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            reader.SpeakAsync(lbtexto.Text);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (reader != null)
+            {
+                if (reader.State == SynthesizerState.Speaking)
+                {
+                    reader.Pause();
+                }
+            }
+        }
+
+        private void botoncuadro_Click(object sender, EventArgs e)
+        {
+            if(reader!=null)
+            {
+                reader.Dispose();
+            }
         }
     }
 }
